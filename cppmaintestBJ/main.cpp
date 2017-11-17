@@ -57,30 +57,6 @@ bool WorldToScreen(Vector& in, Vector& out)
 	return false;
 }
 
-bool ToScreen(Vector origin, int& x, int& y)
-{
-	if (origin.x == 0 && origin.y == 0 && origin.z == 0)
-		return false;
-
-	Vector AbsScreen = Vector(0, 0, 0);
-
-	int scrw, scrh;
-	g_pEngine->GetScreenSize(scrw, scrh);
-
-	matrix4x4 ViewMatrix = g_pEngine->WorldToScreenMatrix();
-
-	//if (!WorldToScreen(scrw, scrh, origin, AbsScreen, ViewMatrix))
-	//	return false;
-
-	if (AbsScreen.x == 0 && AbsScreen.y == 0)
-		return 0, 0;
-
-	x = (int)AbsScreen.x;
-	y = (int)AbsScreen.y;
-
-	return true;
-}
-
 void CalcAngle(Vector src, Vector dst, Vector &angles)
 {
 	Vector delta = src - dst;
@@ -450,14 +426,35 @@ bool  __fastcall CreateMove_Hooked(void* _this, int edx, float flInputSampleTime
 		if (Entity->GetHealth() <= 0/* || Entity->GetTeam() == LocalPlayer->GetTeam()*/)
 			continue;
 
-		if (!IsVisible(LocalPlayer->GetEyePosition(), Entity->GetEyePosition(), Entity))
+		if (!IsVisible(LocalPlayer->GetEyePosition(), Entity->GetEyePosition() , Entity))
+			continue;
+
+		Vector fov;
+
+		int scrw, scrh;
+		g_pEngine->GetScreenSize(scrw, scrh);
+
+		Vector crosshair((float)scrw / 2.f, (float)scrh / 2.f, 0);
+
+		Vector mid = Entity->GetEyePosition();
+
+		mid.z -= Entity->GetCollideable()->OBBMaxs().z / 2;
+
+		if (!WorldToScreen(mid, fov))
+			continue;
+
+		Vector target(fov.x, fov.y, 0);
+
+		float distance = crosshair.DistTo(target);
+
+		if (distance > 100)
 			continue;
 
 		Vector angles;
 
 		///Vector mins = Entity->GetCollideable()->OBBMins();
 		///Vector maxs = Entity->GetCollideable()->OBBMaxs();
-		CalcAngle(LocalPlayer->GetEyePosition(), Entity->GetEyePosition(), angles); /// - Vector(mins.x / 2.1f, maxs.x / 8.5f, mins.z + maxs.z / 20.0f)
+		CalcAngle(LocalPlayer->GetEyePosition(), mid, angles); /// - Vector(mins.x / 2.1f, maxs.x / 8.5f, mins.z + maxs.z / 20.0f)
 
 		//if (LocalPlayer->GetEyePosition().DistTo(Entity->GetEyePosition()) > 10000.0f)
 		//	continue;

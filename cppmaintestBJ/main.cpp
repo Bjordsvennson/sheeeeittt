@@ -4,7 +4,6 @@
 #include "Misc.h"
 #include "NetVarManager.h"
 
-#include "QAngle.h"
 #include "Vector.h"
 
 #include "CGlobalVarsBase.h"
@@ -438,7 +437,7 @@ bool  __fastcall CreateMove_Hooked(void* _this, int edx, float flInputSampleTime
 
 		Vector mid = Entity->GetEyePosition();
 
-		mid.z -= Entity->GetCollideable()->OBBMaxs().z / 2;
+		mid.z -= Entity->GetCollideable()->OBBMaxs().z / 3;
 
 		if (!WorldToScreen(mid, fov))
 			continue;

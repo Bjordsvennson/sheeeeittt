@@ -114,6 +114,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BaseNode.cpp" />
     <ClCompile Include="BJDrawing.cpp" />
     <ClCompile Include="CBaseEntity.cpp" />
     <ClCompile Include="IBaseClientDLL.cpp" />
@@ -131,11 +132,12 @@
     <ClCompile Include="Offsets.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="basehandle.h" />
+    <ClInclude Include="IHandleEntity.h" />
     <ClInclude Include="BJDrawing.h" />
     <ClInclude Include="CBaseEntity.h" />
     <ClInclude Include="CGlobalVarsBase.h" />
     <ClInclude Include="Common.h" />
+    <ClInclude Include="BaseNode.h" />
     <ClInclude Include="IBaseClientDLL.h" />
     <ClInclude Include="IClientEntity.h" />
     <ClInclude Include="IClientMode.h" />
@@ -146,15 +148,12 @@
     <ClInclude Include="IVModelInfo.h" />
     <ClInclude Include="Misc.h" />
     <ClInclude Include="NetVarManager.h" />
-    <ClInclude Include="Offsets.h" />
-    <ClInclude Include="QAngle.h" />
     <ClInclude Include="IEngineTrace.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="VTable.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
-    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

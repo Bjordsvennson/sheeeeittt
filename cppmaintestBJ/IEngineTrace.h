@@ -1,6 +1,6 @@
 #pragma once
 
-#include "basehandle.h"
+#include "IHandleEntity.h"
 #include "CBaseEntity.h"
 #include "Vector.h"
 

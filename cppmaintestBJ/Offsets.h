@@ -10,6 +10,7 @@ struct COffsets
 	DWORD m_Collision;
 	DWORD m_fFlags;
 	DWORD m_iTeamNum;
+	DWORD m_Local;
 	DWORD m_vecPunchAngle;
 };
 

@@ -82,6 +82,6 @@ static void* vtablehook_hook(void* instance, void* hook, int offset)
 
 static void* vtablehook_getfunction(void* instance, int offset)
 {
-	intptr_t VirtualFunction = (*(intptr_t*)instance) + sizeof(intptr_t) * offset;
-	return (void*)*((intptr_t*)VirtualFunction);
+	DWORD VirtualFunction = (*(DWORD*)instance) + sizeof(DWORD) * offset;
+	return (void*)*((DWORD*)VirtualFunction);
 };

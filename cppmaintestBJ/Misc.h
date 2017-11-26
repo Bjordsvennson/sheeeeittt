@@ -263,8 +263,7 @@ enum FontRenderFlag_t
 	FONT_CENTER = 2
 };
 
-
-class	CUserCmd
+class CUserCmd
 {
 public:
 	int header;
@@ -281,4 +280,88 @@ public:
 	short mousedy;
 	bool hasbeenpredicted;
 	char __pad00[284];
+};
+/*
+struct CViewSetup
+{
+	char _0x0000[16];
+	int x;
+	int x_old;
+	int y;
+	int y_old;
+	int width;
+	int    width_old;
+	int height;
+	int    height_old;
+	char _0x0030[128];
+	float fov;
+	float fovViewmodel;
+	Vector origin;
+	Vector angles;
+	float zNear;
+	float zFar;
+	float zNearViewmodel;
+	float zFarViewmodel;
+	float m_flAspectRatio;
+	float m_flNearBlurDepth;
+	float m_flNearFocusDepth;
+	float m_flFarFocusDepth;
+	float m_flFarBlurDepth;
+	float m_flNearBlurRadius;
+	float m_flFarBlurRadius;
+	float m_nDoFQuality;
+	int m_nMotionBlurMode;
+	char _0x0104[68];
+	int m_EdgeBlur;
+};
+*/
+
+/// https://pastebin.com/3azMduCL
+
+enum StereoEye_t
+{
+	STEREO_EYE_MONO = 0,
+	STEREO_EYE_LEFT = 1,
+	STEREO_EYE_RIGHT = 2,
+	STEREO_EYE_MAX = 3,
+};
+
+class CViewSetup
+{
+public:
+	int x;
+	int m_nUnscaledX;
+	int y;
+	int m_nUnscaledY;
+	int width;
+	int m_nUnscaledWidth;
+	int height;
+	//char _0x0030[128]; this size is wrong
+	StereoEye_t m_eStereoEye;
+	int m_nUnscaledHeight;
+	bool m_bOrtho;
+	float m_OrthoLeft;
+	float m_OrthoTop;
+	float m_OrthoRight;
+	float m_OrthoBottom;
+	// supposed end of char _0x0030 pad
+	float fov;
+	float fovViewmodel;
+	Vector origin;
+	QAngle angles;
+	float zNear;
+	float zFar;
+	float zNearViewmodel;
+	float zFarViewmodel;
+	bool m_bRenderToSubrectOfLargerScreen;
+	float m_flAspectRatio;
+	bool m_bOffCenter;
+	float m_flOffCenterTop;
+	float m_flOffCenterBottom;
+	float m_flOffCenterLeft;
+	float m_flOffCenterRight;
+	bool m_bDoBloomAndToneMapping;
+	bool m_bCacheFullSceneState;
+	bool m_bViewToProjectionOverride;
+	matrix4x4 m_ViewToProjection;
 };

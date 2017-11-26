@@ -1,2 +1,319 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram /> 
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="BJDrawing" Collapsed="true">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BJDrawing.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ICollideable" Collapsed="true">
+    <Position X="4.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAIAAAQAAAAABAAAAAA=</HashCode>
+      <FileName>CBaseEntity.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CBaseEntity" Collapsed="true">
+    <Position X="4.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAAAAIAYAAAAAAgAABAAAAAAACABBAA=</HashCode>
+      <FileName>CBaseEntity.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CGlobalVarsBase" Collapsed="true">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABIAAAAAAAAAQFIAAAEAACQAAAAAACQAAAAADEAAAAA=</HashCode>
+      <FileName>CGlobalVarsBase.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IBaseClientDLL" Collapsed="true">
+    <Position X="8.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>IBaseClientDLL.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IClientEntityList" Collapsed="true">
+    <Position X="10" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAgAAEAQAAAAAAAAAAAAAAAAAgACAEAAA=</HashCode>
+      <FileName>IClientEntity.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IClientMode" Collapsed="true">
+    <Position X="3" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IClientMode.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IInputSystem" Collapsed="true">
+    <Position X="6.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEDAAAAAAAAgAAAAAAAAAAAIAAAAAAAAgA=</HashCode>
+      <FileName>IInputSystem.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IPanel" Collapsed="true">
+    <Position X="10" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>IPanel.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISurface" Collapsed="true">
+    <Position X="3" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAABBAAAAAAAAIAgAABAAoAAAAAAMAgAAAAAAA=</HashCode>
+      <FileName>ISurface.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IVEngineClient" Collapsed="true">
+    <Position X="6.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIBAACgAEAAgIQAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>IVEngineClient.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Color" Collapsed="true">
+    <Position X="10" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAAAAAAQAQAAEAAACoAQghgAAAAAE=</HashCode>
+      <FileName>Misc.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CUserCmd" Collapsed="true">
+    <Position X="4.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAQRgAAAAAACAIAQAAAIAAIACgAAAAAAAAAAAIQA=</HashCode>
+      <FileName>Misc.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DVariant" Collapsed="true">
+    <Position X="6.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>NetVarManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CRecvProxyData" Collapsed="true">
+    <Position X="3" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAACAAAAAAAAQAAAAAAAAAgAQAAAA=</HashCode>
+      <FileName>NetVarManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RecvProp" Collapsed="true">
+    <Position X="8.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAQAAEAEgIAAAACAAAAQAQAQMAAAAQABAACAAAA=</HashCode>
+      <FileName>NetVarManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RecvTable" Collapsed="true">
+    <Position X="10" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAGAEAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>NetVarManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClientClass" Collapsed="true">
+    <Position X="8.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAACAAAAAAAgAAAAAAAAAAAQAAAAAAIAAQAAAAAA=</HashCode>
+      <FileName>NetVarManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="INetVarManager" Collapsed="true">
+    <Position X="8.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAgAAAAAAAAAAAAAAACAAAAAAACAAAAAAA=</HashCode>
+      <FileName>NetVarManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vector" Collapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAFAAAAAAAAQBAAAEAAAAAAEBiAQAAACA=</HashCode>
+      <FileName>Vector.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ITraceFilter" Collapsed="true">
+    <Position X="4.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Trace.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="player_info_t" Collapsed="true">
+    <Position X="4.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAIAAAAAAAACAAAAAAEAAAEAEAAAAAAACAABAA=</HashCode>
+      <FileName>CBaseEntity.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="mstudiobbox_t" Collapsed="true">
+    <Position X="10" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAACAIAAAAAAAAAQAAAAAAAgAAAAAAAAACAAAAA=</HashCode>
+      <FileName>CBaseEntity.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="mstudiohitboxset" Collapsed="true">
+    <Position X="3" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAASAEAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CBaseEntity.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="CScreenSize" Collapsed="true">
+    <Position X="4.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>Misc.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="COffsets" Collapsed="true">
+    <Position X="3" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAQAAAAAAAAAAAAAIgAAgAAAAgAAAAAAAAAAAE=</HashCode>
+      <FileName>Offsets.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="matrix3x4" Collapsed="true">
+    <Position X="6.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAAAAAAAAAAEAAAAAAEAAAAAAQAA=</HashCode>
+      <FileName>Vector.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="matrix4x4" Collapsed="true">
+    <Position X="8.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Vector.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Typedef Name="PaintTraverseFn" Collapsed="true">
+    <Position X="3" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>main.cpp</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="CreateMoveFn" Collapsed="true">
+    <Position X="6.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>main.cpp</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="uint32" Collapsed="true">
+    <Position X="4.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CBaseEntity.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="CRC32_t" Collapsed="true">
+    <Position X="3" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CBaseEntity.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="DWORD" Collapsed="true">
+    <Position X="8.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Program Files (x86)\Windows Kits\8.1\Include\shared\minwindef.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="VPANEL" Collapsed="true">
+    <Position X="8.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IPanel.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="HFont" Collapsed="true">
+    <Position X="10" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ISurface.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="QAngle" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Vector.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="SendPropType" Collapsed="true">
+    <Position X="0.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>NetVarManager.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="vec_t" Collapsed="true">
+    <Position X="6.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Vector.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="CreateInterfaceFn" Collapsed="true">
+    <Position X="4.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VTable.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Enum Name="FontDrawType_t" Collapsed="true">
+    <Position X="4.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAAAAAAAAAAAAAgAAAAAIAACAAA=</HashCode>
+      <FileName>ISurface.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ButtonCode_t" Collapsed="true">
+    <Position X="3" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>xiAgIDgPERQiAOhAAYrFSBAADcVquCEBweiQWBnTcDQ=</HashCode>
+      <FileName>Misc.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="FontFlags_t" Collapsed="true">
+    <Position X="6.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAEAAAIAAAAAAAAEEEAAAAAjAAABAAIhAAA=</HashCode>
+      <FileName>Misc.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="FontRenderFlag_t" Collapsed="true">
+    <Position X="8.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAQAAACABAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Misc.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="__unnamed_enum_014b_1" Collapsed="true">
+    <Position X="0.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEIAQAAAAAAAAAAAAAAAAACAAABAUAAAAAIAA=</HashCode>
+      <FileName>NetVarManager.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TraceType_t" Collapsed="true">
+    <Position X="10" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAAAAAABAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Trace.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

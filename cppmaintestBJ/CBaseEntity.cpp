@@ -6,13 +6,6 @@
 #include "IVModelInfo.h"
 #include "VTable.h"
 
-model_t* CBaseEntity::GetModel()
-{
-	//void* clientRenderable = (void*)(this + 4);
-	typedef model_t*(__thiscall* Fn)(void*);
-	return ((Fn)(vtablehook_getfunction(this, 9)))(this);
-}
-
 /*
 player_info_t CBaseEntity::GetPlayerInfo()
 {
@@ -54,14 +47,40 @@ ICollideable * CBaseEntity::GetCollideable()
 	return (ICollideable*)((DWORD)this + offsets.m_Collision);
 }
 
-mstudiobbox_t * mstudiohitboxset::hitbox(int i)
+model_t* CBaseEntity::GetModel()
 {
-	return (mstudiobbox_t*)(((DWORD)this) + hitboxindex) + i;
+	void* clientRenderable = (void*)(this + 0x4);
+	typedef model_t*(__thiscall* Fn)(void*);
+	return ((Fn)vtablehook_getfunction(clientRenderable, 9))(clientRenderable);
 }
 
-mstudiohitboxset* hboxsets[0xFFFFFFF];
+bool CBaseEntity::SetupBones(matrix3x4* pBoneToWorldOut, int nMaxBones, int boneMask, float currentTime)
+{
+	void* clientRenderable = (void*)(this + 0x4);
+	typedef bool(__thiscall* Fn)(void*, matrix3x4*, int, int, float);
+	return ((Fn)vtablehook_getfunction(clientRenderable, 16))(clientRenderable, pBoneToWorldOut, nMaxBones, boneMask, currentTime);
+}
 
-mstudiohitboxset * CBaseEntity::GetHBoxSet()
+Vector CBaseEntity::GetBonePosition(int iBone)
+{
+	matrix3x4 boneMatrixes[128];
+	if (this->SetupBones(boneMatrixes, 128, 0x100, 0))
+	{
+		matrix3x4 boneMatrix = boneMatrixes[iBone];
+		return Vector(boneMatrix.m_flMatVal[0][3], boneMatrix.m_flMatVal[1][3], boneMatrix.m_flMatVal[2][3]);
+	}
+	else
+		return Vector(0, 0, 0);
+}
+
+mstudiobbox_t * mstudiohitboxset_t::hitbox(int i)
+{
+	return (mstudiobbox_t*)(((byte*)this) + hitboxindex) + i;
+}
+
+mstudiohitboxset_t* hboxsets[0xFFFFFFF];
+
+mstudiohitboxset_t * CBaseEntity::GetHBoxSet()
 {
 	int index = this->index;
 	if (!index)
@@ -72,5 +91,5 @@ mstudiohitboxset * CBaseEntity::GetHBoxSet()
 
 Vector CBaseEntity::GetAimPunch()
 {
-	return *(Vector*)((DWORD)this + offsets.m_vecPunchAngle);
+	return *(Vector*)((DWORD)this + offsets.m_Local + offsets.m_vecPunchAngle);
 }

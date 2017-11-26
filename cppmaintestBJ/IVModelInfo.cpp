@@ -1,16 +1,17 @@
 #include "IVModelInfo.h"
 #include "VTable.h"
+#include "CBaseEntity.h"
 
 const char* IVModelInfo::GetModelName(const model_t* model)
 {
 	typedef const char*(__thiscall* Fn)(void*, const model_t*);
-	return ((Fn)(vtablehook_getfunction(this, 3)))(this, model);
+	return ((Fn)(vtablehook_getfunction(this, 2)))(this, model);
 }
 
-void* IVModelInfo::GetStudiomodel(const model_t* model)
+studiohdr* IVModelInfo::GetStudiomodel(const model_t* model)
 {
-	typedef void*(__thiscall* Fn)(void*, const model_t*);
-	return ((Fn)(vtablehook_getfunction(this, 28)))(this, model);
+	typedef studiohdr*(__thiscall* Fn)(void*, const model_t*);
+	return ((Fn)(vtablehook_getfunction(this, 27)))(this, model);
 }
 
 IVModelInfo* g_pModelInfo;

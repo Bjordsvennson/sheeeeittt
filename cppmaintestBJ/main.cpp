@@ -19,7 +19,7 @@
 #include "IVModelInfo.h"
 
 ///	
-///	TODO: Studio hitboxes, OverrideView, fix worldtoscreen fucking up individual elements;
+///	TODO: Studio hitboxes, nospread.
 ///
 ///	ALSO: Put functions like worldtoscreen and toscreen in BJDrawing where they belong.
 ///		  Take jumbles of code in hooks and put them in a class as functions.
@@ -27,6 +27,8 @@
 
 // interfaces
 #define ID_PAINTTRAVERSE 41
+#define ID_CREATEMOVE 21
+#define ID_OVERRIDEVIEW 16
 
 RECT GetViewport()
 {
@@ -203,11 +205,11 @@ void __fastcall PaintTraverse_Hooked(void* _this, void*, unsigned int vpanel, bo
 		GetTextSizeWH(iWidth, iHeight, info.name);
 
 		g_pSurface->DrawSetColor(41, 28, 226, 255);
-		g_pSurface->DrawOutlinedRect(topout.x - width, topout.y, topout.x + width, topout.y + height);
+		g_pSurface->DrawOutlinedRect(bottomout.x - width, topout.y, bottomout.x + width, topout.y + height);
 
 		g_pSurface->DrawSetColor(0, 0, 0, 255);
-		g_pSurface->DrawOutlinedRect(topout.x - width - 1, topout.y - 1, topout.x + width + 1, topout.y + height + 1);
-		g_pSurface->DrawOutlinedRect(topout.x - width + 1, topout.y + 1, topout.x + width - 1, topout.y + height - 1);
+		g_pSurface->DrawOutlinedRect(bottomout.x - width - 1, topout.y - 1, bottomout.x + width + 1, topout.y + height + 1);
+		g_pSurface->DrawOutlinedRect(bottomout.x - width + 1, topout.y + 1, bottomout.x + width - 1, topout.y + height - 1);
 
 		///
 		/// HEALTH BAR DRAWING
@@ -220,11 +222,11 @@ void __fastcall PaintTraverse_Hooked(void* _this, void*, unsigned int vpanel, bo
 
 		g_pSurface->DrawSetColor(0, 0, 0, 255);
 
-		g_pSurface->DrawFilledRect(bottomout.x - width - 5, bottomout.y - height - 1, bottomout.x - width, bottomout.y + 1);
+		g_pSurface->DrawFilledRect(bottomout.x - width - 6, bottomout.y - height - 1, bottomout.x - width - 2, bottomout.y + 1);
 
 		g_pSurface->DrawSetColor((100 - Entity->GetHealth()) * 2.55, Entity->GetHealth() * 2.55, 0, 255);
 
-		g_pSurface->DrawFilledRect(bottomout.x - width - 4, bottomout.y - height, bottomout.x - width - 1, topout.y + hp);
+		g_pSurface->DrawFilledRect(bottomout.x - width - 5, bottomout.y - height, bottomout.x - width - 3, topout.y + hp);
 		
 		///
 		/// NAME DRAWING
@@ -237,33 +239,45 @@ void __fastcall PaintTraverse_Hooked(void* _this, void*, unsigned int vpanel, bo
 	};
 };
 
-void AntiSpread(CUserCmd* cmd, Vector fa)
+void AntiSpread(CUserCmd* cmd, Vector fakeview)
 {
 	if (cmd->buttons & IN_ATTACK)
 	{
 		// ang = angle with predicted spread
 
-		NormalizeAngles(fa);
-		g_pEngine->SetViewAngles(fa);
-		///cmd->viewangles = fa;
+		NormalizeAngles(fakeview);
+		g_pEngine->SetViewAngles(fakeview);
+		///cmd->viewangles = fakeview;
 	};
 };
 
+Vector fakeview(0, 0, 0);
+
 void FakeMouseSamples(CUserCmd* cmd)
 {
+	if (fakeview.IsZero())
+		g_pEngine->GetViewAngles(fakeview);
+
+	fakeview = fakeview + Vector(cmd->mousedy * 0.022, cmd->mousedx * -0.022, 0);
+	NormalizeAngles(fakeview);
+
+	/*
+	if (fakeview.x > 89)
+		fakeview.x = 89;	///
+							/// its more fun without clamping so don't uncomment this
+	if(fakeview.x < -89)	///
+		fakeview.x = -89;
+	*/
+
 	if (cmd->command_number == 0)
 		return;
 
-	Vector fa = cmd->viewangles;
-
-	fa = fa + Vector(cmd->mousedy * 0.022, cmd->mousedx * -0.022, 0);
-	NormalizeAngles(fa);
-
-	g_pEngine->SetViewAngles(fa);
-	AntiSpread(cmd, fa);
+	g_pEngine->SetViewAngles(fakeview);
+	AntiSpread(cmd, fakeview);
 };
 
-void FixMovement(CUserCmd *cmd, QAngle& va, bool aa)
+
+void FixMovement(CUserCmd *cmd, QAngle& va)
 {
 	float yaw, speed;
 	Vector& move = *(Vector*)&cmd->move[0];
@@ -280,12 +294,31 @@ void FixMovement(CUserCmd *cmd, QAngle& va, bool aa)
 	cmd->move[0] = cos(yaw) * speed;
 	cmd->move[1] = sin(yaw) * speed;
 
-	if (view.x < -90.f || view.x > 90.f)
+	if (view.x < -89.f || view.x > 89.f)
 	{
-		cmd->move.x = FloatNegate(cos(FloatNegate(yaw)) * speed);
-		cmd->move.y = FloatNegate(sin(FloatNegate(yaw)) * speed);
+		cmd->move.x = -cmd->move.x;
 	}
+}
+
+/*
+void FixMovement(CUserCmd* cmd, Vector& va) // incorporate the methods used here into the nikyuria movement fix to make it work
+{
+	//Vector vAngs;
+	//g_pEngine->GetViewAngles(vAngs);
+
+	Vector vMove(cmd->move.x, cmd->move.y, cmd->move.z);
+	float flSpeed = vMove.Length2D();
+	Vector vMove2;
+	VectorAngles(vMove, vMove2);
+
+	float flYaw = DEG2RAD(cmd->viewangles.y - va.y + vMove2.y);
+	cmd->move.x = cos(flYaw) * flSpeed;
+	cmd->move.y = sin(flYaw) * flSpeed;
+
+	if (cmd->viewangles.x < -89.f || cmd->viewangles.x > 89.f)
+		cmd->move.x = -cmd->move.x;
 };
+*/
 
 bool IsVisible(Vector& vecAbsStart, Vector& vecAbsEnd, CBaseEntity* target)
 {
@@ -313,6 +346,62 @@ bool IsVisible(Vector& vecAbsStart, Vector& vecAbsEnd, CBaseEntity* target)
 	return false;
 };
 
+/*
+bool GetHitboxPosition(int HitBox, Vector& Origin, int Index)
+{
+	if (HitBox < 0 || HitBox >= 20)
+		return false;
+	matrix3x4 matrix[128];
+	CBaseEntity* Entity = entitylist->GetClientEntity(Index);
+	if (!Entity)
+		return false;
+	//if (Entity->IsDormant()) /// dormancy could be the reason studiohdr crashes
+	//	return false;
+	const model_t* Model = Entity->GetModel();
+	if (!Model)
+		return false;
+	studiohdr* pStudioHdr = Interfaces.ModelInfo->GetStudiomodel(Model);
+	if (!pStudioHdr)
+		return false;
+	if (!Entity->SetupBones((VMatrix*)pmatrix, 128, BONE_USED_BY_HITBOX, 0))
+		return false;
+	mstudiohitboxset_t *set = pStudioHdr->pHitboxSet(0);
+	if (!set)
+		return false;
+	mstudiobbox_t* pBox = NULL;
+	pBox = pStudioHdr->pHitbox(HitBox, NULL);
+	Vector min, max;
+	QAngle angles;
+	MatrixAngles(pmatrix[pBox->bone], angles, Origin);
+	VectorTransform(pBox->bbmin, pmatrix[pBox->bone], min);
+	VectorTransform(pBox->bbmax, pmatrix[pBox->bone], max);
+	Origin = (min + max) * 0.5f;
+
+	return true;
+}
+*/
+
+int FindHead(CBaseEntity* pPlayer)
+{
+	studiohdr *hdr = g_pModelInfo->GetStudiomodel(pPlayer->GetModel());
+	if (!hdr)
+		return -1;
+	mstudiobone* bone;
+	for (int k = 0; k < hdr->numbones; k++)
+	{
+		bone = hdr->pBone(k);
+		if (bone && (bone->parent != -1))
+		{
+			char* boneName = bone->pszName();
+			std::string name(boneName);
+			size_t found = name.find("Head");
+			if (found != std::string::npos)
+				return k;
+		}
+	}
+	return -1;
+};
+
 typedef bool(__fastcall *CreateMoveFn)(void*, int, float, CUserCmd*);
 CreateMoveFn oCreateMove;
 
@@ -336,40 +425,11 @@ bool  __fastcall CreateMove_Hooked(void* _this, int edx, float flInputSampleTime
 	/// FAKE VIEW
 	///
 
-	//FakeMouseSamples(cmd);
-	//Vector oview = cmd->viewangles;
+	FakeMouseSamples(cmd);
+	Vector oview;
+	g_pEngine->GetViewAngles(oview);
 
-	///
-	/// BHOP
-	///
-
-	/*
-	if (cmd->buttons & IN_JUMP)
-	{
-		if (!(LocalPlayer->GetFlags() & FL_ONGROUND))
-		{
-			if (!cacProtection)
-			{
-				cmd->buttons &= ~IN_JUMP;
-				return true;
-			}
-			else
-			{
-				//printf("%i\n", cmd->tick_count - TickDelay);
-
-				if (cmd->tick_count - TickDelay < 3)
-					return true;
-
-				cmd->buttons &= ~IN_JUMP;
-			}
-		}
-		else
-		{
-			if (cacProtection)
-				TickDelay = cmd->tick_count;
-		}
-	}
-	*/
+	//printf("movement: Vector(%f, %f, %f)\n", cmd->move.x, cmd->move.y, cmd->move.z);
 
 	if (GetAsyncKeyState(VK_F9) & 1)
 	{
@@ -378,101 +438,146 @@ bool  __fastcall CreateMove_Hooked(void* _this, int edx, float flInputSampleTime
 		else Beep(0x255, 200);
 	}
 
-	if (!ups)
-		return true;
-
-	///
-	/// Anti-Aim
-	///
-
-	for (int i = 0; i < entitylist->GetHighestEntityIndex(); i++)
+	if (ups)
 	{
-		if (cmd->command_number == 0)
-			continue;
 
-		Vector viewang(0, 0, 0);
+		///
+		/// BHOP
+		///
 
-		viewang.x = -180.00971595f;
+		/*
+		if (!cacProtection)
+		{
+			if (cmd->buttons & IN_JUMP)
+			{
+				if (!(LocalPlayer->GetFlags() & FL_ONGROUND))
+				{
+					//cmd->move.y = cmd->mousedx > 0 ? 400 : -400;
 
-		viewang.y = (cmd->command_number % 50) * 7.2;
+					if (!cacProtection)
+					{
+						cmd->buttons &= ~IN_JUMP;
+						return true;
+					}
+					else
+					{
+						//printf("%i\n", cmd->tick_count - TickDelay);
 
-		NormalizeAngle(viewang.y);
+						if (cmd->tick_count - TickDelay < 3)
+							return true;
 
-		///cmd->viewangles = viewang;
-	};
+						cmd->buttons &= ~IN_JUMP;
+					}
+				}
+				else
+				{
+					if (cacProtection)
+						TickDelay = cmd->tick_count;
+				}
+			}
+		}
+		*/
 
-	///
-	/// Aimbot
-	///
+		if (cmd->command_number != 0)
+		{
 
-	for (int i = 0; i < entitylist->GetHighestEntityIndex(); i++)
-	{
-		if (!g_pInput->IsButtonDown(KEY_F) || cmd->command_number == 0)
-			continue;
+			///
+			/// AntiAim
+			///
 
-		//g_pEngine->ClientCmd_Unrestricted("givecurrentammo"); /// doesnt work? :9
+			Vector viewang(0, 0, 0);
 
-		CBaseEntity* Entity = (CBaseEntity*)entitylist->GetClientEntity(i);
+			viewang.x = -180.00971595f;
 
-		if (!Entity || Entity == LocalPlayer)
-			continue;
+			viewang.y = (cmd->command_number % 50) * 7.2;
 
-		player_info_t info;
+			NormalizeAngle(viewang.y);
 
-		if (!g_pEngine->GetPlayerInfo(i, &info))
-			continue;
+			g_pEngine->SetViewAngles(viewang);
 
-		if (Entity->GetHealth() <= 0/* || Entity->GetTeam() == LocalPlayer->GetTeam()*/)
-			continue;
+			///
+			/// Aimbot
+			///
 
-		if (!IsVisible(LocalPlayer->GetEyePosition(), Entity->GetEyePosition() , Entity))
-			continue;
+			for (int i = 0; i < entitylist->GetHighestEntityIndex(); i++)
+			{
+				if (!g_pInput->IsButtonDown(KEY_F))
+					continue;
 
-		Vector fov;
+				//g_pEngine->ClientCmd_Unrestricted("givecurrentammo"); /// doesnt work? :9
 
-		int scrw, scrh;
-		g_pEngine->GetScreenSize(scrw, scrh);
+				CBaseEntity* Entity = (CBaseEntity*)entitylist->GetClientEntity(i);
 
-		Vector crosshair((float)scrw / 2.f, (float)scrh / 2.f, 0);
+				if (!Entity || Entity == LocalPlayer)
+					continue;
 
-		Vector mid = Entity->GetEyePosition();
+				player_info_t info;
 
-		mid.z -= Entity->GetCollideable()->OBBMaxs().z / 3;
+				if (!g_pEngine->GetPlayerInfo(i, &info))
+					continue;
 
-		if (!WorldToScreen(mid, fov))
-			continue;
+				if (Entity->GetHealth() <= 0/* || Entity->GetTeam() == LocalPlayer->GetTeam()*/)
+					continue;
 
-		Vector target(fov.x, fov.y, 0);
+				if (!IsVisible(LocalPlayer->GetEyePosition(), Entity->GetEyePosition(), Entity))
+					continue;
 
-		float distance = crosshair.DistTo(target);
+				///Vector fov;
 
-		if (distance > 100)
-			continue;
+				///int scrw, scrh;
+				///g_pEngine->GetScreenSize(scrw, scrh);
 
-		Vector angles;
+				///Vector crosshair((float)scrw / 2.f, (float)scrh / 2.f, 0);
 
-		///Vector mins = Entity->GetCollideable()->OBBMins();
-		///Vector maxs = Entity->GetCollideable()->OBBMaxs();
-		CalcAngle(LocalPlayer->GetEyePosition(), mid, angles); /// - Vector(mins.x / 2.1f, maxs.x / 8.5f, mins.z + maxs.z / 20.0f)
+				Vector mid = Entity->GetEyePosition();
 
-		//if (LocalPlayer->GetEyePosition().DistTo(Entity->GetEyePosition()) > 10000.0f)
-		//	continue;
+				mid.z -= Entity->GetCollideable()->OBBMaxs().z / 3;
 
-		//angles -= LocalPlayer->GetAimPunch() * 2.0f;
+				///int head = FindHead(Entity);
 
-		NormalizeAngles(angles);
+				///Vector headpos = Entity->GetBonePosition(head);
 
-		g_pEngine->SetViewAngles(angles);
-		///cmd->viewangles = angles;
-		///cmd->buttons |= IN_ATTACK;
-	};
+				///if (!WorldToScreen(mid, fov))
+				///	continue;
 
-	float x = cmd->viewangles.x;
-	///FixMovement(cmd, oview, x > 89 ? true : x < -89 ? true : false);
+				///Vector target(fov.x, fov.y, 0);
 
-	//g_pEngine->SetViewAngles(cmd->viewangles);
+				///float distance = crosshair.DistTo(target);
+
+				//if (distance > 180)
+				//	continue;
+
+				Vector angles;
+
+				CalcAngle(LocalPlayer->GetEyePosition(), mid, angles);
+
+				angles -= LocalPlayer->GetAimPunch() * 2.0f;
+
+				NormalizeAngles(angles);
+
+				g_pEngine->SetViewAngles(angles);
+				///cmd->viewangles = angles;
+				///cmd->buttons |= IN_ATTACK;
+			}
+		}
+	}
+
+	FixMovement(cmd, oview);
 
 	return false;
+};
+
+typedef void(__fastcall *OverrideViewFn)(void*, CViewSetup*);
+OverrideViewFn oOverrideView;
+
+void  __fastcall OverrideView_Hooked(void* _this, CViewSetup* view)
+{
+	if (!g_pEngine->IsInGame() || !g_pEngine->IsConnected())
+		return;
+
+	view->angles = fakeview;
+
+	oOverrideView(_this, view);
 };
 
 DWORD WINAPI MainThread(LPVOID param)
@@ -488,6 +593,7 @@ DWORD WINAPI MainThread(LPVOID param)
 	entitylist = (IClientEntityList*)GetInterface("client.dll", "VClientEntityList");
 	g_pInput = (IInputSystem*)GetInterface("inputsystem.dll", "InputSystemVersion");
 	g_pEngineTrace = (IEngineTrace*)GetInterface("engine.dll", "EngineTraceClient");
+	g_pModelInfo = (IVModelInfo*)GetInterface("engine.dll", "VModelInfoClient");
 
 	///////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -507,17 +613,20 @@ DWORD WINAPI MainThread(LPVOID param)
 
 	printf("origin offset: 0x%x\n", offsets.m_vecOrigin);
 
-	oPaintTraverse = (PaintTraverseFn)vtablehook_hook(g_pPanel, PaintTraverse_Hooked, ID_PAINTTRAVERSE);
-	printf("painttraverse hooked\n");
-
 	CBaseEntity* LocalPlayer = entitylist->GetClientEntity(g_pEngine->GetLocalPlayer());
 
 	printf("CBaseEntity offset: 0x%x\n", LocalPlayer);
 
+	oPaintTraverse = (PaintTraverseFn)vtablehook_hook(g_pPanel, PaintTraverse_Hooked, ID_PAINTTRAVERSE);
+	printf("painttraverse hooked\n");
+
 	IClientMode* clientmode = **(IClientMode***)(((DWORD)(*(void***)g_pClient)[10]) + 0x5);
 
-	oCreateMove = (CreateMoveFn)vtablehook_hook(clientmode, CreateMove_Hooked, 21);
+	oCreateMove = (CreateMoveFn)vtablehook_hook(clientmode, CreateMove_Hooked, ID_CREATEMOVE);
 	printf("createmove hooked\n");
+
+	oOverrideView = (OverrideViewFn)vtablehook_hook(clientmode, OverrideView_Hooked, ID_OVERRIDEVIEW);
+	printf("overrideview hooked\n");
 
 	/// overrideview index 16
 
@@ -535,7 +644,9 @@ DWORD WINAPI MainThread(LPVOID param)
 			printf("painttraverse unhooked\n");
 			vtablehook_hook(g_pPanel, oPaintTraverse, ID_PAINTTRAVERSE);
 			printf("createmove unhooked\n");
-			vtablehook_hook(clientmode, oCreateMove, 21);
+			vtablehook_hook(clientmode, oCreateMove, ID_CREATEMOVE);
+			printf("overrideview unhooked\n");
+			vtablehook_hook(clientmode, oOverrideView, ID_OVERRIDEVIEW);
 			printf("console free'd\n");
 			FreeConsole();
 		}

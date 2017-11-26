@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="BJDrawing.cpp">
+      <Filter>source files</Filter>
+    </ClCompile>
+    <ClCompile Include="CBaseEntity.cpp">
+      <Filter>source files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>source files</Filter>
+    </ClCompile>
+    <ClCompile Include="NetVarManager.cpp">
+      <Filter>source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Offsets.cpp">
+      <Filter>source files</Filter>
+    </ClCompile>
+    <ClCompile Include="IBaseClientDLL.cpp">
+      <Filter>source files\interaces</Filter>
+    </ClCompile>
+    <ClCompile Include="IClientEntity.cpp">
+      <Filter>source files\interaces</Filter>
+    </ClCompile>
+    <ClCompile Include="IEngineTrace.cpp">
+      <Filter>source files\interaces</Filter>
+    </ClCompile>
+    <ClCompile Include="IInputSystem.cpp">
+      <Filter>source files\interaces</Filter>
+    </ClCompile>
+    <ClCompile Include="IPanel.cpp">
+      <Filter>source files\interaces</Filter>
+    </ClCompile>
+    <ClCompile Include="ISurface.cpp">
+      <Filter>source files\interaces</Filter>
+    </ClCompile>
+    <ClCompile Include="IVEngineClient.cpp">
+      <Filter>source files\interaces</Filter>
+    </ClCompile>
+    <ClCompile Include="IVModelInfo.cpp">
+      <Filter>source files\interaces</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseNode.cpp">
+      <Filter>source files\menu\elements</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BJDrawing.h">
+      <Filter>header files</Filter>
+    </ClInclude>
+    <ClInclude Include="CBaseEntity.h">
+      <Filter>header files</Filter>
+    </ClInclude>
+    <ClInclude Include="CGlobalVarsBase.h">
+      <Filter>header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Common.h">
+      <Filter>header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc.h">
+      <Filter>header files</Filter>
+    </ClInclude>
+    <ClInclude Include="NetVarManager.h">
+      <Filter>header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector.h">
+      <Filter>header files</Filter>
+    </ClInclude>
+    <ClInclude Include="VTable.h">
+      <Filter>header files</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseNode.h">
+      <Filter>header files\menu\elements</Filter>
+    </ClInclude>
+    <ClInclude Include="IBaseClientDLL.h">
+      <Filter>header files\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="IClientEntity.h">
+      <Filter>header files\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="IClientMode.h">
+      <Filter>header files\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="IEngineTrace.h">
+      <Filter>header files\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="IInputSystem.h">
+      <Filter>header files\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="IPanel.h">
+      <Filter>header files\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="ISurface.h">
+      <Filter>header files\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="IHandleEntity.h">
+      <Filter>header files\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="IVEngineClient.h">
+      <Filter>header files\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="IVModelInfo.h">
+      <Filter>header files\interfaces</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="source files">
+      <UniqueIdentifier>{82da8b00-acc1-4307-a0c7-146f760f389a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="header files">
+      <UniqueIdentifier>{154da891-4b87-44a0-8587-9181bb81ffde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="header files\menu">
+      <UniqueIdentifier>{360706fb-5d23-4825-9029-008c178aff83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="header files\menu\elements">
+      <UniqueIdentifier>{229c7f78-fd86-42f9-be3b-489a3464bb2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="header files\interfaces">
+      <UniqueIdentifier>{68d6bd59-020d-47a7-afea-66c871cea52f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source files\interaces">
+      <UniqueIdentifier>{56752863-6b7f-46b9-80a8-e9457e65617c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source files\menu">
+      <UniqueIdentifier>{ebff9545-6ee1-4933-b79a-866cc14a23d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source files\menu\elements">
+      <UniqueIdentifier>{1958103d-6019-43cb-9b5a-42269e16316c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Bullshit">
+      <UniqueIdentifier>{bad34e61-8b95-4e86-b4cc-ae5c779f8f35}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd">
+      <Filter>Bullshit</Filter>
+    </None>
+  </ItemGroup>
+</Project>

@@ -11,6 +11,7 @@ void GrabOffsets()
 	offsets.m_Collision = netvars.FindOffset("DT_BaseEntity", "m_Collision");
 	offsets.m_fFlags = netvars.FindOffset("DT_BasePlayer", "m_fFlags");
 	offsets.m_iTeamNum = netvars.FindOffset("DT_BaseEntity", "m_iTeamNum");
+	offsets.m_Local = netvars.FindOffset("DT_BasePlayer", "m_Local");
 	offsets.m_vecPunchAngle = netvars.FindOffset("DT_BasePlayer", "m_vecPunchAngle"); /// if you are recieving crashes it's from here. m_vecPunchAngle isn't a direct child
-																					  /// of DT_BasePlayer but I think that it goes DT_BasePlayer>localdata>m_vecPunchAngle
+																					  /// of DT_BasePlayer but I think that it goes DT_BasePlayer>m_Local>m_vecPunchAngle
 }
